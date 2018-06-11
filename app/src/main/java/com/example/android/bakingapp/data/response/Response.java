@@ -1,13 +1,13 @@
 package com.example.android.bakingapp.data.response;
 
-import com.example.android.bakingapp.data.model.BakingAppData;
+import com.example.android.bakingapp.data.model.Recipe;
 import java.util.List;
 
 public class Response {
 
-  private List<BakingAppData> data;
+  private List<Recipe> recipes;
 
-  public List<BakingAppData> getData() {
-    return data;
+  public List<Recipe> getRecipes() {
+    return recipes;
   }
 }

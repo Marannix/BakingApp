@@ -2,8 +2,7 @@ package com.example.android.bakingapp.data.model;
 
 import java.util.List;
 
-// TODO: Rename to something better
-public class BakingAppData {
+public class Recipe {
   private int id;
   private String name;
   private List<Ingredients> ingredients;
@@ -11,14 +10,8 @@ public class BakingAppData {
   private int servings;
   private String image;
 
-  public BakingAppData(int id, String name, List<Ingredients> ingredients, List<Step> steps,
-      int servings, String image) {
-    this.id = id;
-    this.name = name;
-    this.ingredients = ingredients;
-    this.steps = steps;
-    this.servings = servings;
-    this.image = image;
+  public Recipe() {
+
   }
 
   public int getId() {
@@ -43,5 +36,29 @@ public class BakingAppData {
 
   public String getImage() {
     return image;
+  }
+
+  public void setId(int id) {
+    this.id = id;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public void setIngredients(List<Ingredients> ingredients) {
+    this.ingredients = ingredients;
+  }
+
+  public void setSteps(List<Step> steps) {
+    this.steps = steps;
+  }
+
+  public void setServings(int servings) {
+    this.servings = servings;
+  }
+
+  public void setImage(String image) {
+    this.image = image;
   }
 }
