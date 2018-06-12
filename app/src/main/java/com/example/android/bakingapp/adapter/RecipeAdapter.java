@@ -1,6 +1,7 @@
 package com.example.android.bakingapp.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.example.android.bakingapp.R;
+import com.example.android.bakingapp.activity.RecipeDetailActivity;
 import com.example.android.bakingapp.data.model.Recipe;
 import java.util.List;
 
@@ -18,7 +20,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
   // TODO: Remove context if not needed
   private List<Recipe> recipes;
   private Context context;
-
+  public static final String EXTRA_MESSAGE = "Recipes";
   public void setRecipeData(List<Recipe> recipes, Context context) {
     this.recipes = recipes;
     this.context = context;
@@ -33,6 +35,14 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
     //TODO: Get some random images for the recipes lol
     final Recipe recipe = recipes.get(position);
     holder.recipeName.setText(recipe.getName());
+
+    holder.itemView.setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        Intent intent = new Intent(context, RecipeDetailActivity.class);
+        intent.putExtra(EXTRA_MESSAGE, recipe);
+        context.startActivity(intent);
+      }
+    });
   }
 
   @Override public int getItemCount() {
