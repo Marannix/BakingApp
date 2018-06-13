@@ -11,7 +11,7 @@ import com.example.android.bakingapp.R;
 import com.example.android.bakingapp.data.model.Ingredients;
 import com.example.android.bakingapp.data.model.Recipe;
 
-public class RecipeDetailView {
+public class RecipeIngredientsView {
 
   @BindView(R.id.ingredientsLayout) LinearLayout ingredientsLayout;
   @BindView(R.id.servingsText) TextView servings;
@@ -19,7 +19,7 @@ public class RecipeDetailView {
   private Context context;
   private Recipe recipe;
 
-  public RecipeDetailView(ViewGroup parent, Recipe recipe, Context context) {
+  public RecipeIngredientsView(ViewGroup parent, Recipe recipe, Context context) {
     ButterKnife.bind(this, parent);
     this.recipe = recipe;
     this.context = context;

@@ -3,7 +3,8 @@ package com.example.android.bakingapp.presenter;
 import android.content.Context;
 import android.view.ViewGroup;
 import com.example.android.bakingapp.data.model.Recipe;
-import com.example.android.bakingapp.view.RecipeDetailView;
+import com.example.android.bakingapp.view.RecipeIngredientsView;
+import com.example.android.bakingapp.view.RecipeStepsList;
 
 public class RecipeDetailPresenter {
 
@@ -14,6 +15,7 @@ public class RecipeDetailPresenter {
   }
 
   public void present(ViewGroup viewGroup, Recipe recipe) {
-    new RecipeDetailView(viewGroup, recipe, context);
+    new RecipeIngredientsView(viewGroup, recipe, context);
+    new RecipeStepsList(viewGroup, recipe.getSteps(), context);
   }
 }

@@ -5,13 +5,11 @@
     android:layout_height="match_parent"
     >
 
-  <!--TODO: Improve this view-->
-  <android.support.v7.widget.AppCompatTextView
-      android:id="@+id/ingredients"
-      android:layout_width="match_parent"
+  <!-- TODO: Make this grid -->
+  <Button
+      android:id="@+id/stepsButton"
+      android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:gravity="center"
-      android:textSize="14sp"
       />
 
 </LinearLayout>

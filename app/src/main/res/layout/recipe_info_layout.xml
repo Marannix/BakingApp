@@ -1,37 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     >
 
-  <android.support.v7.widget.AppCompatTextView
-      android:id="@+id/ingredientsTitle"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:gravity="center"
-      android:padding="10dp"
-      android:text="Ingredients"
-      android:textSize="20sp"
-      />
-
-  <!--Move to a better place loool-->
-
-  <android.support.v7.widget.AppCompatTextView
-      android:id="@+id/servingsText"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:gravity="center"
-      android:textSize="12sp"
-      />
-
   <LinearLayout
-      android:id="@+id/ingredientsLayout"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      android:layout_height="match_parent"
       android:orientation="vertical"
       >
-  </LinearLayout>
 
-</LinearLayout>
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/ingredientsTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="Ingredients"
+        android:textSize="20sp"
+        />
+
+    <!-- TODO: Move to a better place looks weird-->
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/servingsText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="12sp"
+        />
+
+    <LinearLayout
+        android:id="@+id/ingredientsLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+    </LinearLayout>
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/stepsTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="Steps"
+        android:textSize="20sp"
+        />
+
+    <LinearLayout
+        android:id="@+id/stepsButtonLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+    </LinearLayout>
+
+  </LinearLayout>
+</ScrollView>
