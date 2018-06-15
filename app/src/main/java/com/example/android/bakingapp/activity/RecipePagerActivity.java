@@ -56,7 +56,7 @@ public class RecipePagerActivity extends BaseActivity {
   }
 
   private void initStepsPagerFragment() {
-    stepsPageFragment = StepsPageFragment.newStepsInstance((ArrayList<Step>) steps);
+    stepsPageFragment = StepsPageFragment.newStepsInstance((ArrayList<Step>) steps, recipe.getName());
     recipePagerAdapter.addFragment(stepsPageFragment, "Steps");
   }
 }

@@ -19,10 +19,13 @@ import java.util.List;
 
 public class StepsPageFragment extends Fragment {
 
+
   @BindView(R.id.stepsRecyclerView) RecyclerView recyclerView;
 
-  public static final String STEPS_LIST = "steps";
+  private static final String RECIPE_NAME = "recipe_name";
+  private static final String STEPS_LIST = "steps";
   private List<Step> steps;
+  private String recipeName;
 
   public StepsPageFragment() {
   }
@@ -31,6 +34,7 @@ public class StepsPageFragment extends Fragment {
     super.onCreate(savedInstanceState);
     if (getArguments() != null && getArguments().containsKey(STEPS_LIST)) {
       steps = getArguments().getParcelableArrayList(STEPS_LIST);
+      recipeName = getArguments().getString(RECIPE_NAME);
     }
   }
 
@@ -47,15 +51,15 @@ public class StepsPageFragment extends Fragment {
     LinearLayoutManager mLayoutManager = new LinearLayoutManager(getContext());
     recyclerView.setLayoutManager(mLayoutManager);
     recyclerView.setHasFixedSize(true);
-    StepsAdapter stepsAdapter = new StepsAdapter(getContext(), steps);
+    StepsAdapter stepsAdapter = new StepsAdapter(getContext(), steps, recipeName);
     recyclerView.setAdapter(stepsAdapter);
   }
 
-  public static StepsPageFragment newStepsInstance(ArrayList<Step> steps) {
+  public static StepsPageFragment newStepsInstance(ArrayList<Step> steps, String name) {
     StepsPageFragment stepFragment = new StepsPageFragment();
-    // Set the bundle arguments for the fragment.
     Bundle arguments = new Bundle();
     arguments.putParcelableArrayList(STEPS_LIST, steps);
+    arguments.putString(RECIPE_NAME, name);
     stepFragment.setArguments(arguments);
     return stepFragment;
   }

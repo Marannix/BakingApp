@@ -1,6 +1,7 @@
 package com.example.android.bakingapp.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
@@ -10,17 +11,23 @@ import android.view.ViewGroup;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.example.android.bakingapp.R;
+import com.example.android.bakingapp.activity.StepsActivity;
 import com.example.android.bakingapp.data.model.Step;
 import java.util.List;
 
 public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsViewholder> {
 
+  public static final String EXTRA_STEP_INFORMATION = "steps";
+  public static final String EXTRA_RECIPE_NAME = "recipe_name";
+
   private Context context;
   private List<Step> steps;
+  private String recipeName;
 
-  public StepsAdapter(Context context, List<Step> steps) {
+  public StepsAdapter(Context context, List<Step> steps, String recipeName) {
     this.context = context;
     this.steps = steps;
+    this.recipeName = recipeName;
   }
 
   @NonNull @Override
@@ -31,9 +38,18 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsViewhol
 
   @Override
   public void onBindViewHolder(@NonNull StepsAdapter.StepsViewholder holder, int position) {
-    Step step = steps.get(position);
+    final Step step = steps.get(position);
     holder.id.setText(Integer.toString(step.getId()));
     holder.shortDescription.setText(step.getShortDescription());
+
+    holder.itemView.setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        Intent intent = new Intent(context, StepsActivity.class);
+        intent.putExtra(EXTRA_STEP_INFORMATION, step);
+        intent.putExtra(EXTRA_RECIPE_NAME, recipeName);
+        context.startActivity(intent);
+      }
+    });
   }
 
   @Override public int getItemCount() {
