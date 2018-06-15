@@ -7,16 +7,16 @@ public class Step implements Parcelable {
   private int id;
   private String shortDescription;
   private String description;
-  private String videoUrl;
-  private String thumbnailUrl;
+  private String videoURL;
+  private String thumbnailURL;
 
   public Step(int id, String shortDescription, String description, String videoUrl,
       String thumbnailUrl) {
     this.id = id;
     this.shortDescription = shortDescription;
     this.description = description;
-    this.videoUrl = videoUrl;
-    this.thumbnailUrl = thumbnailUrl;
+    this.videoURL = videoUrl;
+    this.thumbnailURL = thumbnailUrl;
   }
 
   public int getId() {
@@ -31,12 +31,12 @@ public class Step implements Parcelable {
     return description;
   }
 
-  public String getVideoUrl() {
-    return videoUrl;
+  public String getVideoURL() {
+    return videoURL;
   }
 
-  public String getThumbnailUrl() {
-    return thumbnailUrl;
+  public String getThumbnailURL() {
+    return thumbnailURL;
   }
 
   @Override public int describeContents() {
@@ -47,8 +47,8 @@ public class Step implements Parcelable {
     id = in.readInt();
     shortDescription = in.readString();
     description = in.readString();
-    videoUrl = in.readString();
-    thumbnailUrl = in.readString();
+    videoURL = in.readString();
+    thumbnailURL = in.readString();
   }
 
   public static final Creator<Step> CREATOR = new Creator<Step>() {
@@ -65,7 +65,7 @@ public class Step implements Parcelable {
     dest.writeInt(id);
     dest.writeString(shortDescription);
     dest.writeString(description);
-    dest.writeString(videoUrl);
-    dest.writeString(thumbnailUrl);
+    dest.writeString(videoURL);
+    dest.writeString(thumbnailURL);
   }
 }

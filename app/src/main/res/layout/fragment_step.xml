@@ -1,18 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/step_fragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragment.StepFragment"
-    android:id="@+id/step_fragment"
     >
 
-  <!-- TODO: Update blank fragment layout -->
-  <TextView
-      android:id="@+id/shortDescription"
+  <com.google.android.exoplayer2.ui.PlayerView
+      android:id="@+id/exoplayer"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:textSize="40sp"
+      android:layout_height="0dp"
+      android:visibility="visible"
+      app:layout_constraintDimensionRatio="16:9"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.0"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
       />
 
-</ScrollView>
+  <ImageView
+      android:id="@+id/thumbnail"
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:visibility="invisible"
+      android:src="@drawable/no_video"
+      app:layout_constraintDimensionRatio="16:9"
+      app:layout_constraintEnd_toStartOf="parent"
+      app:layout_constraintStart_toEndOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      />
+
+  <TextView
+      android:id="@+id/shortDescription"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginEnd="8dp"
+      android:layout_marginStart="8dp"
+      android:layout_marginTop="8dp"
+      android:text="TextView"
+      android:textAlignment="center"
+      android:textSize="18sp"
+      android:textStyle="bold"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/exoplayer"
+      />
+  <TextView
+      android:id="@+id/description"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginEnd="8dp"
+      android:layout_marginStart="8dp"
+      android:layout_marginTop="8dp"
+      android:text="TextView"
+      android:textAlignment="center"
+      android:textSize="18sp"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/shortDescription"
+      />
+
+
+</android.support.constraint.ConstraintLayout>
