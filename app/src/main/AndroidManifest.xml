@@ -16,16 +16,15 @@
         <category android:name="android.intent.category.LAUNCHER"/>
       </intent-filter>
     </activity>
-
     <activity
-        android:name=".activity.RecipeDetailActivity"
+        android:name=".activity.RecipePagerActivity"
         android:parentActivityName=".MainActivity">
       <meta-data
           android:name="android.support.PARENT_ACTIVITY"
           android:value=".MainActivity"/>
     </activity>
-
-
+    <activity android:name=".activity.StepsActivity">
+    </activity>
   </application>
 
 </manifest>

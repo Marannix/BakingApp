@@ -11,7 +11,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.example.android.bakingapp.R;
-import com.example.android.bakingapp.activity.RecipeDetailActivity;
+import com.example.android.bakingapp.activity.RecipePagerActivity;
 import com.example.android.bakingapp.data.model.Recipe;
 import java.util.List;
 
@@ -38,7 +38,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
 
     holder.itemView.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
-        Intent intent = new Intent(context, RecipeDetailActivity.class);
+        Intent intent = new Intent(context, RecipePagerActivity.class);
         intent.putExtra(EXTRA_MESSAGE, recipe);
         context.startActivity(intent);
       }

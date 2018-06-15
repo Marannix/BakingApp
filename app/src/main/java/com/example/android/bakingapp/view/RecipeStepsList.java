@@ -1,12 +1,14 @@
 package com.example.android.bakingapp.view;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.example.android.bakingapp.R;
+import com.example.android.bakingapp.activity.StepsActivity;
 import com.example.android.bakingapp.data.model.Step;
 import java.util.List;
 
@@ -37,9 +39,9 @@ public class RecipeStepsList {
 
       item.stepsButton.setOnClickListener(new View.OnClickListener() {
         @Override public void onClick(View v) {
-          //final Intent intent = new Intent(context, RecipeDetailActivity.class);
-          //intent.putExtra(STEPS_MESSAGE, steps.get(count));
-          //context.startActivity(intent);
+          final Intent intent = new Intent(context, StepsActivity.class);
+          intent.putExtra(STEPS_MESSAGE, steps.get(count));
+          context.startActivity(intent);
         }
       });
     }
