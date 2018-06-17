@@ -1,14 +1,23 @@
 package com.example.android.bakingapp.data.model;
 
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class Ingredients implements Parcelable {
+@Entity(tableName = "ingredients") public class Ingredients implements Parcelable {
+
+  @PrimaryKey(autoGenerate = true) private int id;
   private double quantity;
   private String measure;
   private String ingredient;
+  private int widgetId;
 
-  public Ingredients() {
+  public Ingredients(int id, double quantity, String measure, String ingredient) {
+    this.id = id;
+    this.quantity = quantity;
+    this.measure = measure;
+    this.ingredient = ingredient;
   }
 
   public double getQuantity() {
@@ -59,5 +68,21 @@ public class Ingredients implements Parcelable {
     dest.writeDouble(quantity);
     dest.writeString(measure);
     dest.writeString(ingredient);
+  }
+
+  public int getId() {
+    return id;
+  }
+
+  public int getWidgetId() {
+    return widgetId;
+  }
+
+  public void setId(int id) {
+    this.id = id;
+  }
+
+  public void setWidgetId(int widgetId) {
+    this.widgetId = widgetId;
   }
 }
