@@ -19,13 +19,17 @@ import java.util.List;
 
 public class StepsPageFragment extends Fragment {
 
-
   @BindView(R.id.stepsRecyclerView) RecyclerView recyclerView;
 
+  private static final String TABLET = "tablet";
   private static final String RECIPE_NAME = "recipe_name";
   private static final String STEPS_LIST = "steps";
+
   private List<Step> steps;
   private String recipeName;
+  private boolean isTablet;
+
+  private int position;
 
   public StepsPageFragment() {
   }
@@ -35,6 +39,7 @@ public class StepsPageFragment extends Fragment {
     if (getArguments() != null && getArguments().containsKey(STEPS_LIST)) {
       steps = getArguments().getParcelableArrayList(STEPS_LIST);
       recipeName = getArguments().getString(RECIPE_NAME);
+      isTablet = getArguments().getBoolean(TABLET);
     }
   }
 
@@ -51,16 +56,23 @@ public class StepsPageFragment extends Fragment {
     LinearLayoutManager mLayoutManager = new LinearLayoutManager(getContext());
     recyclerView.setLayoutManager(mLayoutManager);
     recyclerView.setHasFixedSize(true);
-    StepsAdapter stepsAdapter = new StepsAdapter(getContext(), steps, recipeName);
+    StepsAdapter stepsAdapter = new StepsAdapter(getContext(), steps, recipeName, isTablet);
     recyclerView.setAdapter(stepsAdapter);
+    position = stepsAdapter.getPosition();
   }
 
-  public static StepsPageFragment newStepsInstance(ArrayList<Step> steps, String name) {
+  public static StepsPageFragment newStepsInstance(ArrayList<Step> steps, String name,
+      boolean isTablet) {
     StepsPageFragment stepFragment = new StepsPageFragment();
     Bundle arguments = new Bundle();
     arguments.putParcelableArrayList(STEPS_LIST, steps);
     arguments.putString(RECIPE_NAME, name);
+    arguments.putBoolean(TABLET, isTablet);
     stepFragment.setArguments(arguments);
     return stepFragment;
+  }
+
+  public Step getPosition() {
+    return steps.get(position);
   }
 }

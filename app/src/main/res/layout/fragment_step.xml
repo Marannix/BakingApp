@@ -24,8 +24,8 @@
       android:id="@+id/thumbnail"
       android:layout_width="match_parent"
       android:layout_height="0dp"
-      android:visibility="invisible"
       android:src="@drawable/no_video"
+      android:visibility="invisible"
       app:layout_constraintDimensionRatio="16:9"
       app:layout_constraintEnd_toStartOf="parent"
       app:layout_constraintStart_toEndOf="parent"
@@ -61,6 +61,5 @@
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toBottomOf="@+id/shortDescription"
       />
-
 
 </android.support.constraint.ConstraintLayout>

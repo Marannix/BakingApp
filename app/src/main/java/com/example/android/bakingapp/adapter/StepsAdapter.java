@@ -23,11 +23,14 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsViewhol
   private Context context;
   private List<Step> steps;
   private String recipeName;
+  private boolean isTablet;
+  private int stepPosition;
 
-  public StepsAdapter(Context context, List<Step> steps, String recipeName) {
+  public StepsAdapter(Context context, List<Step> steps, String recipeName, boolean isTablet) {
     this.context = context;
     this.steps = steps;
     this.recipeName = recipeName;
+    this.isTablet = isTablet;
   }
 
   @NonNull @Override
@@ -39,21 +42,28 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsViewhol
   @Override
   public void onBindViewHolder(@NonNull StepsAdapter.StepsViewholder holder, int position) {
     final Step step = steps.get(position);
+    stepPosition = position;
     holder.id.setText(Integer.toString(step.getId()));
     holder.shortDescription.setText(step.getShortDescription());
 
     holder.itemView.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
-        Intent intent = new Intent(context, StepsActivity.class);
-        intent.putExtra(EXTRA_STEP_INFORMATION, step);
-        intent.putExtra(EXTRA_RECIPE_NAME, recipeName);
-        context.startActivity(intent);
+        if (!isTablet) {
+          Intent intent = new Intent(context, StepsActivity.class);
+          intent.putExtra(EXTRA_STEP_INFORMATION, step);
+          intent.putExtra(EXTRA_RECIPE_NAME, recipeName);
+          context.startActivity(intent);
+        }
       }
     });
   }
 
   @Override public int getItemCount() {
     return steps != null ? steps.size() : 0;
+  }
+
+  public int getPosition() {
+    return stepPosition;
   }
 
   public class StepsViewholder extends RecyclerView.ViewHolder {
@@ -65,4 +75,5 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsViewhol
       ButterKnife.bind(this, itemView);
     }
   }
+
 }
