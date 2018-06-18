@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
-import android.widget.Toast;
 import com.example.android.bakingapp.R;
 import com.example.android.bakingapp.data.model.Ingredients;
 import com.example.android.bakingapp.data.model.Recipe;
@@ -49,16 +48,14 @@ public class IngredientWidgetService extends RemoteViewsService {
     }
 
     @Override public int getCount() {
-      Toast.makeText(context, ingredientsList.size(), Toast.LENGTH_SHORT).show();
       return ingredientsList != null ? ingredientsList.size() : 0;
     }
 
     @Override public RemoteViews getViewAt(int position) {
-      Toast.makeText(context, ingredientsList.size(), Toast.LENGTH_SHORT).show();
       RemoteViews remoteViews =
           new RemoteViews(getPackageName(), R.layout.widget_ingredient_list_item);
       remoteViews.setTextViewText(R.id.ingredientWidgetText,
-          ingredientsList.get(ingredientsId).getIngredient());
+          ingredientsList.get(position).getIngredient());
       return remoteViews;
     }
 
