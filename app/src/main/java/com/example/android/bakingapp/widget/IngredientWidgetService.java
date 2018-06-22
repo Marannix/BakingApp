@@ -5,57 +5,50 @@ import android.content.Intent;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 import com.example.android.bakingapp.R;
+import com.example.android.bakingapp.SharedPreference;
 import com.example.android.bakingapp.data.model.Ingredients;
-import com.example.android.bakingapp.data.model.Recipe;
-import com.example.android.bakingapp.utils.RecipeLoader;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import java.lang.reflect.Type;
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.List;
 
 public class IngredientWidgetService extends RemoteViewsService {
-  public static final String WIDGET_EXTRA = "widget";
 
   @Override public RemoteViewsFactory onGetViewFactory(Intent intent) {
-    int ingredientsId = intent.getIntExtra(WIDGET_EXTRA, 0);
-    return new MyRemoteViewsFactory(getApplicationContext(), ingredientsId);
+    return new MyRemoteViewsFactory(getApplicationContext());
   }
 
   private class MyRemoteViewsFactory implements RemoteViewsFactory {
 
     private List<Ingredients> ingredientsList;
     private Context context;
-    private int ingredientsId;
-    private List<Recipe> recipeList;
+    private ArrayList<String> ingredients;
 
-    public MyRemoteViewsFactory(Context context, int ingredientsId) {
+    public MyRemoteViewsFactory(Context context) {
       this.context = context;
-      this.ingredientsId = ingredientsId;
+      ingredients = new ArrayList<>();
     }
 
     @Override public void onCreate() {
-
+      loadIngredients();
     }
 
     @Override public void onDataSetChanged() {
-      recipeList = loadJsonFromAsset();
-      ingredientsList = recipeList.get(ingredientsId).getIngredients();
+      loadIngredients();
     }
 
     @Override public void onDestroy() {
-
+      if (ingredients != null) {
+        ingredients.clear();
+      }
     }
 
     @Override public int getCount() {
-      return ingredientsList != null ? ingredientsList.size() : 0;
+      return ingredients != null ? ingredients.size() : 0;
     }
 
     @Override public RemoteViews getViewAt(int position) {
       RemoteViews remoteViews =
           new RemoteViews(getPackageName(), R.layout.widget_ingredient_list_item);
-      remoteViews.setTextViewText(R.id.ingredientWidgetText,
-          ingredientsList.get(position).getIngredient());
+      remoteViews.setTextViewText(R.id.ingredientWidgetText, ingredients.get(position));
       return remoteViews;
     }
 
@@ -75,13 +68,19 @@ public class IngredientWidgetService extends RemoteViewsService {
       return false;
     }
 
-    public List<Recipe> loadJsonFromAsset() {
-      String json = RecipeLoader.loadRecipeJson(getApplicationContext());
-      if (json == null) return null;
-      Gson gson = new Gson();
-      Type arrayOfRecipes = new TypeToken<Collection<Recipe>>() {
-      }.getType();
-      return gson.fromJson(json, arrayOfRecipes);
+    private void loadIngredients() {
+      if (SharedPreference.getSharedPreferences(context) != null) {
+        ingredientsList = SharedPreference.getSharedPreferences(context).getIngredients();
+        for (Ingredients i : ingredientsList) {
+          String ingredient = i.getIngredient();
+          Double quantity = i.getQuantity();
+          String measure = i.getMeasure();
+          String ingredientString = quantity + " " + measure + " " + ingredient;
+          ingredients.add(ingredientString);
+        }
+      } else {
+        ingredients.add("No ingredients");
+      }
     }
   }
 }

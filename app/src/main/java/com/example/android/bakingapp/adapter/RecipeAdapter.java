@@ -11,6 +11,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.example.android.bakingapp.R;
+import com.example.android.bakingapp.SharedPreference;
 import com.example.android.bakingapp.activity.RecipePagerActivity;
 import com.example.android.bakingapp.data.model.Recipe;
 import java.util.List;
@@ -21,6 +22,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
   private List<Recipe> recipes;
   private Context context;
   public static final String EXTRA_MESSAGE = "Recipes";
+
   public void setRecipeData(List<Recipe> recipes, Context context) {
     this.recipes = recipes;
     this.context = context;
@@ -38,9 +40,11 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
 
     holder.itemView.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
+        SharedPreference.setSharedPreferences(context, recipe);
         Intent intent = new Intent(context, RecipePagerActivity.class);
         intent.putExtra(EXTRA_MESSAGE, recipe);
         context.startActivity(intent);
+
       }
     });
   }
