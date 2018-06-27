@@ -16,7 +16,7 @@ import com.example.android.bakingapp.activity.StepsActivity;
 import com.example.android.bakingapp.data.model.Step;
 import java.util.List;
 
-public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsViewholder> {
+public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsViewHolder> {
 
   public static final String EXTRA_STEP_INFORMATION = "steps";
   public static final String EXTRA_RECIPE_NAME = "recipe_name";
@@ -27,7 +27,8 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsViewhol
   private String recipeName;
   private boolean isTablet;
 
-  public StepsAdapter(Context context, RecipePagerActivity activity, List<Step> steps, String recipeName, boolean isTablet) {
+  public StepsAdapter(Context context, RecipePagerActivity activity, List<Step> steps,
+      String recipeName, boolean isTablet) {
     this.context = context;
     this.activity = activity;
     this.steps = steps;
@@ -36,14 +37,16 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsViewhol
   }
 
   @NonNull @Override
-  public StepsAdapter.StepsViewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-    return new StepsViewholder(
+  public StepsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    return new StepsViewHolder(
         LayoutInflater.from(context).inflate(R.layout.steps_item, parent, false));
   }
 
+  // Does it need to be final? I don't think so..
   @Override
-  public void onBindViewHolder(@NonNull StepsAdapter.StepsViewholder holder, int position) {
+  public void onBindViewHolder(@NonNull StepsViewHolder holder, int position) {
     final Step step = steps.get(position);
+
     holder.id.setText(Integer.toString(step.getId()));
     holder.shortDescription.setText(step.getShortDescription());
 
@@ -55,6 +58,7 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsViewhol
           intent.putExtra(EXTRA_RECIPE_NAME, recipeName);
           context.startActivity(intent);
         } else {
+
           activity.onStepSelected(step);
         }
       }
@@ -65,14 +69,13 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsViewhol
     return steps != null ? steps.size() : 0;
   }
 
-  public class StepsViewholder extends RecyclerView.ViewHolder {
+  public class StepsViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.stepId) AppCompatTextView id;
     @BindView(R.id.stepShortDescription) AppCompatTextView shortDescription;
 
-    public StepsViewholder(View itemView) {
+    public StepsViewHolder(View itemView) {
       super(itemView);
       ButterKnife.bind(this, itemView);
     }
   }
-
 }

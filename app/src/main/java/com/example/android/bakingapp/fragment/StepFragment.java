@@ -28,12 +28,16 @@ import com.google.android.exoplayer2.util.Util;
 
 public class StepFragment extends Fragment {
 
+  private static final String STEPS_LIST = "steps_list";
+  private static final String STEPS = "steps";
+  private static final String POSITION = "position";
+  private static final String CURRENT_WINDOW = "current_window";
+  private static final String STATE = "state";
+
   @BindView(R.id.shortDescription) TextView shortDescription;
   @BindView(R.id.description) TextView description;
   @BindView(R.id.exoplayer) PlayerView playerView;
   @BindView(R.id.thumbnail) ImageView thumbnail;
-
-  private static final String STEPS_LIST = "steps";
 
   private SimpleExoPlayer exoPlayer;
   private Step steps;
@@ -63,11 +67,34 @@ public class StepFragment extends Fragment {
   @Nullable @Override
   public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
+
+    if (savedInstanceState != null) {
+      playbackPosition = savedInstanceState.getLong(POSITION);
+      currentWindow = savedInstanceState.getInt(CURRENT_WINDOW);
+      playWhenReady = savedInstanceState.getBoolean(STATE);
+      steps = savedInstanceState.getParcelable(STEPS);
+    }
+
     View rootView = inflater.inflate(R.layout.fragment_step, container, false);
     ButterKnife.bind(this, rootView);
     shortDescription.setText(steps.getShortDescription());
     description.setText(steps.getDescription());
     return rootView;
+  }
+
+  @Override public void onSaveInstanceState(@NonNull Bundle savedInstanceState) {
+    super.onSaveInstanceState(savedInstanceState);
+
+    if (exoPlayer != null) {
+      playbackPosition = exoPlayer.getCurrentPosition();
+      currentWindow = exoPlayer.getCurrentWindowIndex();
+      playWhenReady = exoPlayer.getPlayWhenReady();
+    }
+
+    savedInstanceState.putParcelable(STEPS, steps);
+    savedInstanceState.putLong(POSITION, playbackPosition);
+    savedInstanceState.putLong(CURRENT_WINDOW, currentWindow);
+    savedInstanceState.putBoolean(STATE, playWhenReady);
   }
 
   public void releasePlayer() {
@@ -115,6 +142,7 @@ public class StepFragment extends Fragment {
   }
 
   public void updateSteps(Step step) {
+    steps = step;
     releasePlayer();
     shortDescription.setText(step.getShortDescription());
     description.setText(step.getDescription());
