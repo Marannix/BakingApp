@@ -11,14 +11,31 @@ import static com.example.android.bakingapp.adapter.StepsAdapter.EXTRA_STEP_INFO
 
 public class StepsDetailActivity extends BaseActivity {
 
+  private static final String STEPS = "steps";
+
+  private Step steps;
+  private String recipeName;
+  private StepsDetailFragment stepFragment;
+
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_steps);
     ButterKnife.bind(this, getViewGroup());
-    Step steps = getIntent().getParcelableExtra(EXTRA_STEP_INFORMATION);
-    String recipeName = getIntent().getStringExtra(EXTRA_RECIPE_NAME);
-    StepsDetailFragment stepFragment = StepsDetailFragment.newStepInstance(steps);
+
+    if (savedInstanceState != null) {
+      steps = savedInstanceState.getParcelable(STEPS);
+    } else {
+      steps = getIntent().getParcelableExtra(EXTRA_STEP_INFORMATION);
+    }
+
+    recipeName = getIntent().getStringExtra(EXTRA_RECIPE_NAME);
+    stepFragment = StepsDetailFragment.newStepInstance(steps);
     getSupportFragmentManager().beginTransaction().add(R.id.root_layout, stepFragment).commit();
     setTitle(recipeName);
+  }
+
+  @Override protected void onSaveInstanceState(Bundle savedInstanceState) {
+    super.onSaveInstanceState(savedInstanceState);
+    steps = savedInstanceState.getParcelable(STEPS);
   }
 }

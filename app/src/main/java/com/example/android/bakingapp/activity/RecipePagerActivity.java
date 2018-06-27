@@ -22,6 +22,8 @@ import static com.example.android.bakingapp.adapter.RecipeAdapter.EXTRA_MESSAGE;
 
 public class RecipePagerActivity extends BaseActivity {
 
+  private static final String RECIPE = "recipe";
+
   @BindView(R.id.tabs) TabLayout tabs;
   @BindView(R.id.viewpager) ViewPager viewPager;
   @Nullable @BindView(R.id.stepsDetailFragment) FrameLayout stepDetailFragment;
@@ -40,9 +42,13 @@ public class RecipePagerActivity extends BaseActivity {
     setContentView(R.layout.recipe_pager);
     ButterKnife.bind(this, getViewGroup());
 
-    isTablet = stepDetailFragment != null;
+    if (savedInstanceState != null) {
+      recipe = savedInstanceState.getParcelable(RECIPE);
+    } else {
+      recipe = getIntent().getParcelableExtra(EXTRA_MESSAGE);
+    }
 
-    recipe = getIntent().getParcelableExtra(EXTRA_MESSAGE);
+    isTablet = stepDetailFragment != null;
     ingredients = recipe.getIngredients();
     steps = recipe.getSteps();
     recipePagerAdapter = new RecipePagerAdapter(getSupportFragmentManager());
@@ -84,5 +90,11 @@ public class RecipePagerActivity extends BaseActivity {
 
   public void onStepSelected(Step step) {
     stepFragment.updateSteps(step);
+  }
+
+  @Override protected void onSaveInstanceState(Bundle savedInstanceState) {
+    super.onSaveInstanceState(savedInstanceState);
+    savedInstanceState.putParcelable(RECIPE, recipe);
+
   }
 }
