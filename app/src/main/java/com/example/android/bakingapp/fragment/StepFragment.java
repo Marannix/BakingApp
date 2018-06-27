@@ -114,6 +114,11 @@ public class StepFragment extends Fragment {
     playerView.setVisibility(View.VISIBLE);
   }
 
+  public void changeStep(Step step) {
+    shortDescription.setText(step.getShortDescription());
+    description.setText(step.getDescription());
+  }
+
   @Override public void onStart() {
     super.onStart();
     if (Util.SDK_INT > 23) {

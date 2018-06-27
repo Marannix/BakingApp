@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.example.android.bakingapp.R;
+import com.example.android.bakingapp.activity.RecipePagerActivity;
 import com.example.android.bakingapp.adapter.StepsAdapter;
 import com.example.android.bakingapp.data.model.Step;
 import java.util.ArrayList;
@@ -28,8 +29,6 @@ public class StepsPageFragment extends Fragment {
   private List<Step> steps;
   private String recipeName;
   private boolean isTablet;
-
-  private int position;
 
   public StepsPageFragment() {
   }
@@ -56,9 +55,12 @@ public class StepsPageFragment extends Fragment {
     LinearLayoutManager mLayoutManager = new LinearLayoutManager(getContext());
     recyclerView.setLayoutManager(mLayoutManager);
     recyclerView.setHasFixedSize(true);
-    StepsAdapter stepsAdapter = new StepsAdapter(getContext(), steps, recipeName, isTablet);
+
+    // Giving the adapter the activity is very naughty, I didn't know how else to implement this.
+    StepsAdapter stepsAdapter =
+        new StepsAdapter(getContext(), (RecipePagerActivity) getActivity(), steps, recipeName,
+            isTablet);
     recyclerView.setAdapter(stepsAdapter);
-    position = stepsAdapter.getPosition();
   }
 
   public static StepsPageFragment newStepsInstance(ArrayList<Step> steps, String name,
@@ -70,9 +72,5 @@ public class StepsPageFragment extends Fragment {
     arguments.putBoolean(TABLET, isTablet);
     stepFragment.setArguments(arguments);
     return stepFragment;
-  }
-
-  public Step getPosition() {
-    return steps.get(position);
   }
 }

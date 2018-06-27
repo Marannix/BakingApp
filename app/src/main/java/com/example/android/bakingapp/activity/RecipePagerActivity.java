@@ -28,6 +28,7 @@ public class RecipePagerActivity extends BaseActivity {
 
   private IngredientsPageFragment ingredientsPageFragment;
   private StepsPageFragment stepsPageFragment;
+  private StepFragment stepFragment;
   private Recipe recipe;
   private List<Ingredients> ingredients;
   private List<Step> steps;
@@ -57,7 +58,7 @@ public class RecipePagerActivity extends BaseActivity {
 
   public void showTabletLayout(Step position) {
     if (isTablet) {
-      StepFragment stepFragment = StepFragment.newStepInstance(position);
+      stepFragment = StepFragment.newStepInstance(position);
       getSupportFragmentManager().beginTransaction()
           .replace(R.id.stepsDetailFragment, stepFragment)
           .commit();
@@ -79,5 +80,9 @@ public class RecipePagerActivity extends BaseActivity {
     stepsPageFragment =
         StepsPageFragment.newStepsInstance((ArrayList<Step>) steps, recipe.getName(), isTablet);
     recipePagerAdapter.addFragment(stepsPageFragment, "Steps");
+  }
+
+  public void onStepSelected(Step step) {
+    stepFragment.changeStep(step);
   }
 }

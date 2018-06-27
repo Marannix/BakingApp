@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.example.android.bakingapp.R;
+import com.example.android.bakingapp.activity.RecipePagerActivity;
 import com.example.android.bakingapp.activity.StepsActivity;
 import com.example.android.bakingapp.data.model.Step;
 import java.util.List;
@@ -21,13 +22,14 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsViewhol
   public static final String EXTRA_RECIPE_NAME = "recipe_name";
 
   private Context context;
+  private RecipePagerActivity activity;
   private List<Step> steps;
   private String recipeName;
   private boolean isTablet;
-  private int stepPosition;
 
-  public StepsAdapter(Context context, List<Step> steps, String recipeName, boolean isTablet) {
+  public StepsAdapter(Context context, RecipePagerActivity activity, List<Step> steps, String recipeName, boolean isTablet) {
     this.context = context;
+    this.activity = activity;
     this.steps = steps;
     this.recipeName = recipeName;
     this.isTablet = isTablet;
@@ -42,7 +44,6 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsViewhol
   @Override
   public void onBindViewHolder(@NonNull StepsAdapter.StepsViewholder holder, int position) {
     final Step step = steps.get(position);
-    stepPosition = position;
     holder.id.setText(Integer.toString(step.getId()));
     holder.shortDescription.setText(step.getShortDescription());
 
@@ -53,6 +54,8 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsViewhol
           intent.putExtra(EXTRA_STEP_INFORMATION, step);
           intent.putExtra(EXTRA_RECIPE_NAME, recipeName);
           context.startActivity(intent);
+        } else {
+          activity.onStepSelected(step);
         }
       }
     });
@@ -60,10 +63,6 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsViewhol
 
   @Override public int getItemCount() {
     return steps != null ? steps.size() : 0;
-  }
-
-  public int getPosition() {
-    return stepPosition;
   }
 
   public class StepsViewholder extends RecyclerView.ViewHolder {
