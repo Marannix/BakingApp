@@ -12,7 +12,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.example.android.bakingapp.R;
 import com.example.android.bakingapp.activity.RecipePagerActivity;
-import com.example.android.bakingapp.activity.StepsActivity;
+import com.example.android.bakingapp.activity.StepsDetailActivity;
 import com.example.android.bakingapp.data.model.Step;
 import java.util.List;
 
@@ -53,7 +53,7 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsViewHol
     holder.itemView.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
         if (!isTablet) {
-          Intent intent = new Intent(context, StepsActivity.class);
+          Intent intent = new Intent(context, StepsDetailActivity.class);
           intent.putExtra(EXTRA_STEP_INFORMATION, step);
           intent.putExtra(EXTRA_RECIPE_NAME, recipeName);
           context.startActivity(intent);

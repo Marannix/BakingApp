@@ -18,7 +18,7 @@ import com.example.android.bakingapp.data.model.Step;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StepsPageFragment extends Fragment {
+public class StepsPagerFragment extends Fragment {
 
   @BindView(R.id.stepsRecyclerView) RecyclerView recyclerView;
 
@@ -30,7 +30,7 @@ public class StepsPageFragment extends Fragment {
   private String recipeName;
   private boolean isTablet;
 
-  public StepsPageFragment() {
+  public StepsPagerFragment() {
   }
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -63,9 +63,9 @@ public class StepsPageFragment extends Fragment {
     recyclerView.setAdapter(stepsAdapter);
   }
 
-  public static StepsPageFragment newStepsInstance(ArrayList<Step> steps, String name,
+  public static StepsPagerFragment newStepsInstance(ArrayList<Step> steps, String name,
       boolean isTablet) {
-    StepsPageFragment stepFragment = new StepsPageFragment();
+    StepsPagerFragment stepFragment = new StepsPagerFragment();
     Bundle arguments = new Bundle();
     arguments.putParcelableArrayList(STEPS_LIST, steps);
     arguments.putString(RECIPE_NAME, name);

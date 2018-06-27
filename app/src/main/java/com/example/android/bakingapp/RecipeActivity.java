@@ -5,7 +5,7 @@ import com.example.android.bakingapp.activity.BaseActivity;
 import com.example.android.bakingapp.presenter.RecipePresenter;
 
 // TODO: Rename to RecipeActivity
-public class MainActivity extends BaseActivity {
+public class RecipeActivity extends BaseActivity {
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);

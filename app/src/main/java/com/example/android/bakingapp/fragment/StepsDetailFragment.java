@@ -26,7 +26,7 @@ import com.google.android.exoplayer2.ui.PlayerView;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 
-public class StepFragment extends Fragment {
+public class StepsDetailFragment extends Fragment {
 
   private static final String STEPS_LIST = "steps_list";
   private static final String STEPS = "steps";
@@ -46,11 +46,11 @@ public class StepFragment extends Fragment {
   private long playbackPosition;
   private boolean playWhenReady = true;
 
-  public StepFragment() {
+  public StepsDetailFragment() {
   }
 
-  public static StepFragment newStepInstance(Step step) {
-    StepFragment stepFragment = new StepFragment();
+  public static StepsDetailFragment newStepInstance(Step step) {
+    StepsDetailFragment stepFragment = new StepsDetailFragment();
     Bundle args = new Bundle();
     args.putParcelable(STEPS_LIST, step);
     stepFragment.setArguments(args);

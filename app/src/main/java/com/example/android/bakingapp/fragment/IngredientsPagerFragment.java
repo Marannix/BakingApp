@@ -17,14 +17,14 @@ import com.example.android.bakingapp.data.model.Ingredients;
 import java.util.ArrayList;
 import java.util.List;
 
-public class IngredientsPageFragment extends Fragment {
+public class IngredientsPagerFragment extends Fragment {
 
   @BindView(R.id.ingredientsRecyclerView) RecyclerView recyclerView;
 
   private static final String INGREDIENTS_LIST = "ingredients";
   private List<Ingredients> ingredients;
 
-  public IngredientsPageFragment() {
+  public IngredientsPagerFragment() {
   }
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -43,8 +43,8 @@ public class IngredientsPageFragment extends Fragment {
     return rootView;
   }
 
-  public static IngredientsPageFragment newIngredientsInstance(ArrayList<Ingredients> ingredients) {
-    IngredientsPageFragment ingredientsPageFragment = new IngredientsPageFragment();
+  public static IngredientsPagerFragment newIngredientsInstance(ArrayList<Ingredients> ingredients) {
+    IngredientsPagerFragment ingredientsPageFragment = new IngredientsPagerFragment();
     Bundle args = new Bundle();
     args.putParcelableArrayList(INGREDIENTS_LIST, ingredients);
     ingredientsPageFragment.setArguments(args);

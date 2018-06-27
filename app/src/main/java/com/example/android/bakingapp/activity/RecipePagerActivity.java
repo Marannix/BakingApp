@@ -12,9 +12,9 @@ import com.example.android.bakingapp.adapter.RecipePagerAdapter;
 import com.example.android.bakingapp.data.model.Ingredients;
 import com.example.android.bakingapp.data.model.Recipe;
 import com.example.android.bakingapp.data.model.Step;
-import com.example.android.bakingapp.fragment.IngredientsPageFragment;
-import com.example.android.bakingapp.fragment.StepFragment;
-import com.example.android.bakingapp.fragment.StepsPageFragment;
+import com.example.android.bakingapp.fragment.IngredientsPagerFragment;
+import com.example.android.bakingapp.fragment.StepsDetailFragment;
+import com.example.android.bakingapp.fragment.StepsPagerFragment;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,9 +26,9 @@ public class RecipePagerActivity extends BaseActivity {
   @BindView(R.id.viewpager) ViewPager viewPager;
   @Nullable @BindView(R.id.stepsDetailFragment) FrameLayout stepDetailFragment;
 
-  private IngredientsPageFragment ingredientsPageFragment;
-  private StepsPageFragment stepsPageFragment;
-  private StepFragment stepFragment;
+  private IngredientsPagerFragment ingredientsPageFragment;
+  private StepsPagerFragment stepsPageFragment;
+  private StepsDetailFragment stepFragment;
   private Recipe recipe;
   private List<Ingredients> ingredients;
   private List<Step> steps;
@@ -58,7 +58,7 @@ public class RecipePagerActivity extends BaseActivity {
 
   public void showTabletLayout(Step position) {
     if (isTablet) {
-      stepFragment = StepFragment.newStepInstance(position);
+      stepFragment = StepsDetailFragment.newStepInstance(position);
       getSupportFragmentManager().beginTransaction()
           .replace(R.id.stepsDetailFragment, stepFragment)
           .commit();
@@ -72,13 +72,13 @@ public class RecipePagerActivity extends BaseActivity {
 
   private void initIngredientsPagerFragment() {
     ingredientsPageFragment =
-        IngredientsPageFragment.newIngredientsInstance((ArrayList<Ingredients>) ingredients);
+        IngredientsPagerFragment.newIngredientsInstance((ArrayList<Ingredients>) ingredients);
     recipePagerAdapter.addFragment(ingredientsPageFragment, "Ingredients");
   }
 
   private void initStepsPagerFragment() {
     stepsPageFragment =
-        StepsPageFragment.newStepsInstance((ArrayList<Step>) steps, recipe.getName(), isTablet);
+        StepsPagerFragment.newStepsInstance((ArrayList<Step>) steps, recipe.getName(), isTablet);
     recipePagerAdapter.addFragment(stepsPageFragment, "Steps");
   }
 

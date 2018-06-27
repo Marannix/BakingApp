@@ -8,7 +8,7 @@ import android.widget.LinearLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.example.android.bakingapp.R;
-import com.example.android.bakingapp.activity.StepsActivity;
+import com.example.android.bakingapp.activity.StepsDetailActivity;
 import com.example.android.bakingapp.data.model.Step;
 import java.util.List;
 
@@ -39,7 +39,7 @@ public class RecipeStepsList {
 
       item.stepsButton.setOnClickListener(new View.OnClickListener() {
         @Override public void onClick(View v) {
-          final Intent intent = new Intent(context, StepsActivity.class);
+          final Intent intent = new Intent(context, StepsDetailActivity.class);
           intent.putExtra(STEPS_MESSAGE, steps.get(count));
           context.startActivity(intent);
         }

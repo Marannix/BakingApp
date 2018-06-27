@@ -7,7 +7,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViews;
-import com.example.android.bakingapp.MainActivity;
+import com.example.android.bakingapp.RecipeActivity;
 import com.example.android.bakingapp.R;
 import com.example.android.bakingapp.SharedPreference;
 
@@ -31,7 +31,7 @@ public class IngredientWidgetProvider extends AppWidgetProvider {
     }
 
     Intent intent = new Intent(context, IngredientWidgetService.class);
-    Intent activity = new Intent(context, MainActivity.class);
+    Intent activity = new Intent(context, RecipeActivity.class);
 
     views.setRemoteAdapter(R.id.widgetListView, intent);
 
