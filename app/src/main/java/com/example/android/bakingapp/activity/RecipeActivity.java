@@ -1,10 +1,10 @@
-package com.example.android.bakingapp;
+package com.example.android.bakingapp.activity;
 
 import android.os.Bundle;
+import com.example.android.bakingapp.R;
 import com.example.android.bakingapp.activity.BaseActivity;
 import com.example.android.bakingapp.presenter.RecipePresenter;
 
-// TODO: Rename to RecipeActivity
 public class RecipeActivity extends BaseActivity {
 
   @Override protected void onCreate(Bundle savedInstanceState) {

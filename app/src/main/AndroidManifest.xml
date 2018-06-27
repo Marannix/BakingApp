@@ -13,7 +13,7 @@
       android:roundIcon="@mipmap/ic_launcher_round"
       android:supportsRtl="true"
       android:theme="@style/AppTheme">
-    <activity android:name=".RecipeActivity">
+    <activity android:name=".activity.RecipeActivity">
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
 
@@ -22,10 +22,10 @@
     </activity>
     <activity
         android:name=".activity.RecipePagerActivity"
-        android:parentActivityName=".RecipeActivity">
+        android:parentActivityName=".activity.RecipeActivity">
       <meta-data
           android:name="android.support.PARENT_ACTIVITY"
-          android:value=".RecipeActivity"/>
+          android:value=".activity.RecipeActivity"/>
     </activity>
     <activity android:name=".activity.StepsDetailActivity">
     </activity>

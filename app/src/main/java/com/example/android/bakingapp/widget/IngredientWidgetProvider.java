@@ -7,7 +7,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViews;
-import com.example.android.bakingapp.RecipeActivity;
+import com.example.android.bakingapp.activity.RecipeActivity;
 import com.example.android.bakingapp.R;
 import com.example.android.bakingapp.SharedPreference;
 
