@@ -83,6 +83,6 @@ public class RecipePagerActivity extends BaseActivity {
   }
 
   public void onStepSelected(Step step) {
-    stepFragment.changeStep(step);
+    stepFragment.updateSteps(step);
   }
 }

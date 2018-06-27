@@ -80,10 +80,10 @@ public class StepFragment extends Fragment {
     }
   }
 
-  public void initialisePlayer() {
+  public void initialisePlayer(String videoURL) {
     initExoPlayer();
-    if (!TextUtils.isEmpty(steps.getVideoURL())) {
-      videoUri = Uri.parse(steps.getVideoURL());
+    if (!TextUtils.isEmpty(videoURL)) {
+      videoUri = Uri.parse(videoURL);
       MediaSource mediaSource =
           new ExtractorMediaSource.Factory(new DefaultHttpDataSourceFactory("BakingApp")).
               createMediaSource(videoUri);
@@ -114,22 +114,24 @@ public class StepFragment extends Fragment {
     playerView.setVisibility(View.VISIBLE);
   }
 
-  public void changeStep(Step step) {
+  public void updateSteps(Step step) {
+    releasePlayer();
     shortDescription.setText(step.getShortDescription());
     description.setText(step.getDescription());
+    initialisePlayer(step.getVideoURL());
   }
 
   @Override public void onStart() {
     super.onStart();
     if (Util.SDK_INT > 23) {
-      initialisePlayer();
+      initialisePlayer(steps.getVideoURL());
     }
   }
 
   @Override public void onResume() {
     super.onResume();
     if ((Util.SDK_INT <= 23)) {
-      initialisePlayer();
+      initialisePlayer(steps.getVideoURL());
     }
   }
 
