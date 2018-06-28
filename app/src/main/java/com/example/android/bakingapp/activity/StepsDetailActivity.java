@@ -12,6 +12,7 @@ import static com.example.android.bakingapp.adapter.StepsAdapter.EXTRA_STEP_INFO
 public class StepsDetailActivity extends BaseActivity {
 
   private static final String STEPS = "steps";
+  private static final String STEPS_FRAGMENT = "steps_fragment";
 
   private Step steps;
   private String recipeName;
@@ -24,12 +25,13 @@ public class StepsDetailActivity extends BaseActivity {
 
     if (savedInstanceState != null) {
       steps = savedInstanceState.getParcelable(STEPS);
+      getSupportFragmentManager().getFragment(savedInstanceState, STEPS_FRAGMENT);
     } else {
       steps = getIntent().getParcelableExtra(EXTRA_STEP_INFORMATION);
+      stepFragment = StepsDetailFragment.newStepInstance(steps);
     }
 
     recipeName = getIntent().getStringExtra(EXTRA_RECIPE_NAME);
-    stepFragment = StepsDetailFragment.newStepInstance(steps);
     getSupportFragmentManager().beginTransaction().add(R.id.root_layout, stepFragment).commit();
     setTitle(recipeName);
   }
@@ -37,5 +39,6 @@ public class StepsDetailActivity extends BaseActivity {
   @Override protected void onSaveInstanceState(Bundle savedInstanceState) {
     super.onSaveInstanceState(savedInstanceState);
     steps = savedInstanceState.getParcelable(STEPS);
+    getSupportFragmentManager().putFragment(savedInstanceState, STEPS_FRAGMENT, stepFragment);
   }
 }

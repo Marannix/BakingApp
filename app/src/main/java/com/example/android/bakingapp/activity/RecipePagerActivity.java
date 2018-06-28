@@ -23,6 +23,8 @@ import static com.example.android.bakingapp.adapter.RecipeAdapter.EXTRA_MESSAGE;
 public class RecipePagerActivity extends BaseActivity {
 
   private static final String RECIPE = "recipe";
+  private static final String LAST_VIDEO_INDEX = "last_video_index";
+  private static final int FIRST_VIDEO = 0;
 
   @BindView(R.id.tabs) TabLayout tabs;
   @BindView(R.id.viewpager) ViewPager viewPager;
@@ -36,6 +38,7 @@ public class RecipePagerActivity extends BaseActivity {
   private List<Step> steps;
   private RecipePagerAdapter recipePagerAdapter;
   private boolean isTablet;
+  private int lastVideoIndex = FIRST_VIDEO;
 
   @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -44,6 +47,7 @@ public class RecipePagerActivity extends BaseActivity {
 
     if (savedInstanceState != null) {
       recipe = savedInstanceState.getParcelable(RECIPE);
+      lastVideoIndex = savedInstanceState.getInt(LAST_VIDEO_INDEX);
     } else {
       recipe = getIntent().getParcelableExtra(EXTRA_MESSAGE);
     }
@@ -56,8 +60,7 @@ public class RecipePagerActivity extends BaseActivity {
     viewPager.setAdapter(recipePagerAdapter);
     tabs.setupWithViewPager(viewPager);
 
-    // First step in the list
-    showTabletLayout(steps.get(0));
+    showTabletLayout(steps.get(lastVideoIndex));
 
     setTitle(recipe.getName());
   }
@@ -90,11 +93,12 @@ public class RecipePagerActivity extends BaseActivity {
 
   public void onStepSelected(Step step) {
     stepFragment.updateSteps(step);
+    lastVideoIndex = step.getId();
   }
 
   @Override protected void onSaveInstanceState(Bundle savedInstanceState) {
     super.onSaveInstanceState(savedInstanceState);
     savedInstanceState.putParcelable(RECIPE, recipe);
-
+    savedInstanceState.putInt(LAST_VIDEO_INDEX, lastVideoIndex);
   }
 }

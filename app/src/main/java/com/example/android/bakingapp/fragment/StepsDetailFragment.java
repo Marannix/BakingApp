@@ -24,7 +24,6 @@ import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.ui.PlayerView;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
-import com.google.android.exoplayer2.util.Util;
 
 public class StepsDetailFragment extends Fragment {
 
@@ -69,10 +68,10 @@ public class StepsDetailFragment extends Fragment {
       @Nullable Bundle savedInstanceState) {
 
     if (savedInstanceState != null) {
+      steps = savedInstanceState.getParcelable(STEPS);
       playbackPosition = savedInstanceState.getLong(POSITION);
       currentWindow = savedInstanceState.getInt(CURRENT_WINDOW);
       playWhenReady = savedInstanceState.getBoolean(STATE);
-      steps = savedInstanceState.getParcelable(STEPS);
     }
 
     View rootView = inflater.inflate(R.layout.fragment_step, container, false);
@@ -102,6 +101,7 @@ public class StepsDetailFragment extends Fragment {
       playbackPosition = exoPlayer.getCurrentPosition();
       currentWindow = exoPlayer.getCurrentWindowIndex();
       playWhenReady = exoPlayer.getPlayWhenReady();
+      exoPlayer.stop();
       exoPlayer.release();
       exoPlayer = null;
     }
@@ -149,35 +149,16 @@ public class StepsDetailFragment extends Fragment {
     initialisePlayer(step.getVideoURL());
   }
 
-  @Override public void onStart() {
-    super.onStart();
-    if (Util.SDK_INT > 23) {
-      initialisePlayer(steps.getVideoURL());
-    }
-  }
-
   @Override public void onResume() {
     super.onResume();
-    if ((Util.SDK_INT <= 23)) {
+    if (steps.getVideoURL() != null) {
       initialisePlayer(steps.getVideoURL());
     }
-  }
-
-  @Override public void onStop() {
-    super.onStop();
-    if (Util.SDK_INT > 23) {
-      releasePlayer();
-    }
-  }
-
-  @Override public void onDestroy() {
-    super.onDestroy();
-    releasePlayer();
   }
 
   @Override public void onPause() {
     super.onPause();
-    if (Util.SDK_INT <= 23) {
+    if (steps.getVideoURL() != null) {
       releasePlayer();
     }
   }
