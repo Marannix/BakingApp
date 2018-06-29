@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.widget.FrameLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,9 +27,13 @@ public class RecipePagerActivity extends BaseActivity {
   private static final String LAST_VIDEO_INDEX = "last_video_index";
   private static final int FIRST_VIDEO = 0;
 
+  private static final String SAVED_POSITION = "position";
+  private static final String SAVED_CURRENT_WINDOW = "current_window";
+  private static final String SAVED_STATE = "state";
+
   @BindView(R.id.tabs) TabLayout tabs;
   @BindView(R.id.viewpager) ViewPager viewPager;
-  @Nullable @BindView(R.id.stepsDetailFragment) FrameLayout stepDetailFragment;
+  @Nullable @BindView(R.id.stepsDetailFragment) FrameLayout stepDetailLayout;
 
   private IngredientsPagerFragment ingredientsPageFragment;
   private StepsPagerFragment stepsPageFragment;
@@ -40,6 +45,10 @@ public class RecipePagerActivity extends BaseActivity {
   private boolean isTablet;
   private int lastVideoIndex = FIRST_VIDEO;
 
+  private long playbackPosition;
+  private int currentWindow;
+  private boolean playWhenReady = true;
+
   @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.recipe_pager);
@@ -48,11 +57,15 @@ public class RecipePagerActivity extends BaseActivity {
     if (savedInstanceState != null) {
       recipe = savedInstanceState.getParcelable(RECIPE);
       lastVideoIndex = savedInstanceState.getInt(LAST_VIDEO_INDEX);
+      playbackPosition = savedInstanceState.getLong(SAVED_POSITION);
+      currentWindow = savedInstanceState.getInt(SAVED_CURRENT_WINDOW);
+      playWhenReady = savedInstanceState.getBoolean(SAVED_STATE);
     } else {
       recipe = getIntent().getParcelableExtra(EXTRA_MESSAGE);
     }
 
-    isTablet = stepDetailFragment != null;
+    isTablet = stepDetailLayout != null;
+
     ingredients = recipe.getIngredients();
     steps = recipe.getSteps();
     recipePagerAdapter = new RecipePagerAdapter(getSupportFragmentManager());
@@ -60,14 +73,18 @@ public class RecipePagerActivity extends BaseActivity {
     viewPager.setAdapter(recipePagerAdapter);
     tabs.setupWithViewPager(viewPager);
 
-    showTabletLayout(steps.get(lastVideoIndex));
+    Log.d("Joshua", "RecipePagerActivity onCreate: " + this);
+    showTabletLayout(steps.get(lastVideoIndex), playbackPosition, currentWindow, playWhenReady);
 
     setTitle(recipe.getName());
   }
 
-  public void showTabletLayout(Step position) {
+  public void showTabletLayout(Step position, long playbackPosition, int currentWindow,
+      boolean playWhenReady) {
     if (isTablet) {
-      stepFragment = StepsDetailFragment.newStepInstance(position);
+      Log.d("Joshua", "showTabletLayout: the playbackPosition is  " + playbackPosition);
+      stepFragment = StepsDetailFragment.newStepInstance(position, playbackPosition, currentWindow, playWhenReady,
+          isTablet);
       getSupportFragmentManager().beginTransaction()
           .replace(R.id.stepsDetailFragment, stepFragment)
           .commit();
@@ -96,9 +113,20 @@ public class RecipePagerActivity extends BaseActivity {
     lastVideoIndex = step.getId();
   }
 
+  public void onFragmentDestroy(long playbackPosition, int currentWindow, boolean playWhenReady) {
+    Log.d("joshua", "onFragmentDestroy: position is " + playbackPosition);
+    this.playbackPosition = playbackPosition;
+    this.currentWindow = currentWindow;
+    this.playWhenReady = playWhenReady;
+
+  }
+
   @Override protected void onSaveInstanceState(Bundle savedInstanceState) {
     super.onSaveInstanceState(savedInstanceState);
     savedInstanceState.putParcelable(RECIPE, recipe);
     savedInstanceState.putInt(LAST_VIDEO_INDEX, lastVideoIndex);
+    savedInstanceState.putLong(SAVED_POSITION, playbackPosition);
+    savedInstanceState.putLong(SAVED_CURRENT_WINDOW, currentWindow);
+    savedInstanceState.putBoolean(SAVED_STATE, playWhenReady);
   }
 }

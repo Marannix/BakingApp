@@ -42,7 +42,6 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsViewHol
         LayoutInflater.from(context).inflate(R.layout.steps_item, parent, false));
   }
 
-  // TODO: Does it need to be final? I don't think so..
   @Override
   public void onBindViewHolder(@NonNull StepsViewHolder holder, int position) {
     final Step step = steps.get(position);
