@@ -15,7 +15,6 @@ import com.example.android.bakingapp.SharedPreference;
  * Implementation of App Widget functionality.
  */
 
-//TODO : Rename IngredientWidgetProvider
 public class IngredientWidgetProvider extends AppWidgetProvider {
 
   static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId) {
